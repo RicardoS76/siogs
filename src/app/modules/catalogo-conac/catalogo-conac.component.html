@@ -1,0 +1,200 @@
+<h2 class="titulo-conac">CATÁLOGO CONAC</h2>
+
+<div class="header-bar">
+  <div class="input-wrapper">
+    <input
+      type="text"
+      class="input-ejercicio"
+      placeholder="EJERCICIO 2025"
+    />
+    <i nz-icon nzType="search" class="input-icon"></i>
+  </div>
+
+  <div class="action-buttons">
+    <div class="button-row">
+      <button nz-button class="btn-carga-masiva" (click)="cargaMasiva()">
+        <i nz-icon nzType="cloud-upload"></i>
+        Carga masiva de catálogo CONAC
+      </button>
+
+      <button nz-button class="btn-nuevo-conac" (click)="agregarNuevo()">
+        <i nz-icon nzType="plus"></i>
+        Nuevo CONAC
+      </button>
+    </div>
+
+    <div class="botones-secundarios">
+      <button class="icon-button" title="Actualizar">
+        <i nz-icon nzType="redo" nzTheme="outline"></i>
+      </button>
+      <button class="icon-button" title="Eliminar">
+        <i nz-icon nzType="file-exclamation" nzTheme="outline"></i>
+      </button>
+      <button class="icon-button" title="Exportar PDF">
+        <i nz-icon nzType="file-pdf" nzTheme="outline"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- TABLA -->
+<nz-table
+  [nzData]="catalogoConacOrdenado.length ? catalogoConacOrdenado : catalogoConacFiltrado"
+  [nzBordered]="true"
+  [nzScroll]="{ x: '1500px' }"
+  [nzPageSize]="10"
+>
+  <thead>
+    <tr>
+      <!-- COLUMNA: CUENTA -->
+      <th>
+        <span style="display: flex; align-items: center; justify-content: center; gap: 4px;">
+          CUENTA
+          <i nz-icon nzType="arrow-up" nzTheme="outline"
+             (click)="ordenarManual('cuenta', 'ascend')"
+             [style.color]="ordenCuenta === 'ascend' ? '#B03848' : '#ccc'"></i>
+          <i nz-icon nzType="arrow-down" nzTheme="outline"
+             (click)="ordenarManual('cuenta', 'descend')"
+             [style.color]="ordenCuenta === 'descend' ? '#B03848' : '#ccc'"></i>
+        </span>
+        <input nz-input placeholder="FILTRAR" [(ngModel)]="filtroCuenta" (ngModelChange)="limpiarOrden()" />
+      </th>
+
+      <!-- REPITE ESTRUCTURA PARA CADA COLUMNA -->
+
+      <th>
+        <span style="display: flex; align-items: center; justify-content: center; gap: 4px;">
+          DESCRIPCIÓN
+          <i nz-icon nzType="arrow-up" nzTheme="outline"
+             (click)="ordenarManual('descripcion', 'ascend')"
+             [style.color]="ordenDescripcion === 'ascend' ? '#B03848' : '#ccc'"></i>
+          <i nz-icon nzType="arrow-down" nzTheme="outline"
+             (click)="ordenarManual('descripcion', 'descend')"
+             [style.color]="ordenDescripcion === 'descend' ? '#B03848' : '#ccc'"></i>
+        </span>
+        <input nz-input placeholder="FILTRAR" [(ngModel)]="filtroDescripcion" (ngModelChange)="limpiarOrden()" />
+      </th>
+
+      <th>
+        <span style="display: flex; align-items: center; justify-content: center; gap: 4px;">
+          NATURALEZA
+          <i nz-icon nzType="arrow-up" nzTheme="outline"
+             (click)="ordenarManual('naturaleza', 'ascend')"
+             [style.color]="ordenNaturaleza === 'ascend' ? '#B03848' : '#ccc'"></i>
+          <i nz-icon nzType="arrow-down" nzTheme="outline"
+             (click)="ordenarManual('naturaleza', 'descend')"
+             [style.color]="ordenNaturaleza === 'descend' ? '#B03848' : '#ccc'"></i>
+        </span>
+        <input nz-input placeholder="FILTRAR" [(ngModel)]="filtroNaturaleza" (ngModelChange)="limpiarOrden()" />
+      </th>
+
+      <th>
+        <span style="display: flex; align-items: center; justify-content: center; gap: 4px;">
+          ESTRUCTURA
+          <i nz-icon nzType="arrow-up" nzTheme="outline"
+             (click)="ordenarManual('estructura', 'ascend')"
+             [style.color]="ordenEstructura === 'ascend' ? '#B03848' : '#ccc'"></i>
+          <i nz-icon nzType="arrow-down" nzTheme="outline"
+             (click)="ordenarManual('estructura', 'descend')"
+             [style.color]="ordenEstructura === 'descend' ? '#B03848' : '#ccc'"></i>
+        </span>
+        <input nz-input placeholder="FILTRAR" [(ngModel)]="filtroEstructura" (ngModelChange)="limpiarOrden()" />
+      </th>
+
+      <th>
+        <span style="display: flex; align-items: center; justify-content: center; gap: 4px;">
+          ESTADO FINANCIERO
+          <i nz-icon nzType="arrow-up" nzTheme="outline"
+             (click)="ordenarManual('estadoFinanciero', 'ascend')"
+             [style.color]="ordenEstadoFinanciero === 'ascend' ? '#B03848' : '#ccc'"></i>
+          <i nz-icon nzType="arrow-down" nzTheme="outline"
+             (click)="ordenarManual('estadoFinanciero', 'descend')"
+             [style.color]="ordenEstadoFinanciero === 'descend' ? '#B03848' : '#ccc'"></i>
+        </span>
+        <input nz-input placeholder="FILTRAR" [(ngModel)]="filtroEstadoFinanciero" (ngModelChange)="limpiarOrden()" />
+      </th>
+
+      <th>
+        <span style="display: flex; align-items: center; justify-content: center; gap: 4px;">
+          POSICIÓN FINANCIERA
+          <i nz-icon nzType="arrow-up" nzTheme="outline"
+             (click)="ordenarManual('posicionFinanciera', 'ascend')"
+             [style.color]="ordenPosicionFinanciera === 'ascend' ? '#B03848' : '#ccc'"></i>
+          <i nz-icon nzType="arrow-down" nzTheme="outline"
+             (click)="ordenarManual('posicionFinanciera', 'descend')"
+             [style.color]="ordenPosicionFinanciera === 'descend' ? '#B03848' : '#ccc'"></i>
+        </span>
+        <input nz-input placeholder="FILTRAR" [(ngModel)]="filtroPosicionFinanciera" (ngModelChange)="limpiarOrden()" />
+      </th>
+
+      <th>
+        <span style="display: flex; align-items: center; justify-content: center; gap: 4px;">
+          FECHA DE ALTA
+          <i nz-icon nzType="arrow-up" nzTheme="outline"
+             (click)="ordenarManual('fechaAlta', 'ascend')"
+             [style.color]="ordenFechaAlta === 'ascend' ? '#B03848' : '#ccc'"></i>
+          <i nz-icon nzType="arrow-down" nzTheme="outline"
+             (click)="ordenarManual('fechaAlta', 'descend')"
+             [style.color]="ordenFechaAlta === 'descend' ? '#B03848' : '#ccc'"></i>
+        </span>
+        <input nz-input placeholder="FILTRAR" [(ngModel)]="filtroFechaAlta" (ngModelChange)="limpiarOrden()" />
+      </th>
+
+      <th>
+        <span style="display: flex; align-items: center; justify-content: center; gap: 4px;">
+          INICIO DE VIGENCIA
+          <i nz-icon nzType="arrow-up" nzTheme="outline"
+             (click)="ordenarManual('inicioVigencia', 'ascend')"
+             [style.color]="ordenInicioVigencia === 'ascend' ? '#B03848' : '#ccc'"></i>
+          <i nz-icon nzType="arrow-down" nzTheme="outline"
+             (click)="ordenarManual('inicioVigencia', 'descend')"
+             [style.color]="ordenInicioVigencia === 'descend' ? '#B03848' : '#ccc'"></i>
+        </span>
+        <input nz-input placeholder="FILTRAR" [(ngModel)]="filtroInicioVigencia" (ngModelChange)="limpiarOrden()" />
+      </th>
+
+      <th>
+        <span style="display: flex; align-items: center; justify-content: center; gap: 4px;">
+          FIN DE VIGENCIA
+          <i nz-icon nzType="arrow-up" nzTheme="outline"
+             (click)="ordenarManual('finVigencia', 'ascend')"
+             [style.color]="ordenFinVigencia === 'ascend' ? '#B03848' : '#ccc'"></i>
+          <i nz-icon nzType="arrow-down" nzTheme="outline"
+             (click)="ordenarManual('finVigencia', 'descend')"
+             [style.color]="ordenFinVigencia === 'descend' ? '#B03848' : '#ccc'"></i>
+        </span>
+        <input nz-input placeholder="FILTRAR" [(ngModel)]="filtroFinVigencia" (ngModelChange)="limpiarOrden()" />
+      </th>
+
+      <th>ESTATUS</th>
+      <th>EDITAR</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let item of catalogoConacOrdenado.length ? catalogoConacOrdenado : catalogoConacFiltrado; trackBy: trackByIndex">
+      <td>{{ item.cuenta }}</td>
+      <td>{{ item.descripcion }}</td>
+      <td>{{ item.naturaleza }}</td>
+      <td>{{ item.estructura }}</td>
+      <td>{{ item.estadoFinanciero }}</td>
+      <td>{{ item.posicionFinanciera }}</td>
+      <td>{{ item.fechaAlta | date: 'yyyy-MM-dd' }}</td>
+      <td>{{ item.inicioVigencia | date: 'yyyy-MM-dd' }}</td>
+      <td>{{ item.finVigencia | date: 'yyyy-MM-dd' }}</td>
+      <td>
+        <nz-tag [nzColor]="item.estatus === 'VIGENTE' ? 'green' : 'red'">{{ item.estatus }}</nz-tag>
+      </td>
+      <td>
+        <button nz-button nzType="link" nzSize="small" (click)="editar(item)">
+          <i nz-icon nzType="edit"></i>
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
+
+<!-- Botón para limpiar orden -->
+<div style="margin-top: 16px;">
+  <button nz-button nzType="default" (click)="limpiarOrden()">Limpiar orden</button>
+</div>

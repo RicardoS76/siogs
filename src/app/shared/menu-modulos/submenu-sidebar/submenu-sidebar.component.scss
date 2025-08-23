@@ -1,0 +1,168 @@
+:host {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 360px;
+  background: #f9f9fb;
+  padding: 1rem;
+  font-family: 'Montserrat', sans-serif;
+  box-shadow: 2px 0 12px rgba(0, 0, 0, 0.15);
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  z-index: 4000;
+  overflow-y: auto;
+  animation: slideInFromLeft 0.35s ease-out;
+}
+
+@keyframes slideInFromLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.modulo-header {
+  cursor: pointer;
+
+  &:hover .modulo-titulo {
+    text-decoration: underline;
+    color: #1a7f37;
+  }
+}
+
+.sidebar-container {
+  width: 100%;
+
+  .modulo-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+
+    .modulo-icon {
+      font-size: 18px;
+      margin-right: 8px;
+    }
+
+    .modulo-titulo {
+      font-size: 14px;
+      text-transform: uppercase;
+      color: #212121;
+      font-weight: 400;
+    }
+  }
+
+  .categoria {
+    margin-bottom: 14px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background: #ffffff;
+    overflow: hidden;
+    transition: all 0.2s ease-in-out;
+
+    .categoria-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 400;
+      background-color: #f5f5f5;
+      color: #212121;
+
+      &:hover {
+        background-color: #eeeeee;
+      }
+
+      .expandida {
+        color: #a50b35; // rojo cuando categoría está expandida
+      }
+
+      i[nz-icon] {
+        font-size: 12px;
+        color: #212121;
+      }
+    }
+
+    .subopciones {
+      background: #ffffff;
+      padding: 6px 0;
+
+      .subopcion {
+        padding: 0;
+        font-size: 13px;
+        display: block;
+        cursor: pointer;
+        color: #212121;
+
+        .sub-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 10px 20px;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 14px;
+          font-weight: 400;
+          color: #212121;
+          cursor: pointer;
+          border-radius: 6px;
+          margin: 4px 8px;
+          transition: color 0.2s ease;
+
+          &:hover {
+            color: #1a7f37; // verde al hacer hover
+          }
+
+          &.activa {
+            color: #1a7f37; // verde al estar seleccionada
+            font-weight: 500;
+          }
+
+          .nz-icon {
+            font-size: 12px;
+            margin-left: 8px;
+            color: #212121;
+            transition: transform 0.3s ease;
+          }
+        }
+
+        .sub-subopciones {
+          padding-left: 36px;
+          margin-top: 4px;
+
+          .item {
+            font-size: 13px;
+            padding: 6px 0;
+            color: #555;
+            cursor: pointer;
+            transition: color 0.2s ease;
+
+            &:hover {
+              color: #1a7f37;
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+:host-context(.submenu-animating) {
+  animation: slideOutToLeft 0.3s ease-in forwards !important;
+}
+
+@keyframes slideOutToLeft {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
