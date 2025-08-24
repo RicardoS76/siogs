@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 
 import { Observable, of } from 'rxjs';
-import { CatalogoConac } from '../models/catalogo-conac.service';
+import { CatalogoConac } from '../models/catalogo-conac.model';
 
 @Injectable({
   providedIn: 'root'

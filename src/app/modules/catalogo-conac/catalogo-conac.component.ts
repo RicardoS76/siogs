@@ -10,7 +10,7 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzInputModule } from 'ng-zorro-antd/input';
 
-import { CatalogoConac } from '../../models/catalogo-conac.service';
+import { CatalogoConac } from '../../models/catalogo-conac.model';
 import { CatalogoConacService } from '../../services/catalogo-conac.service';
 
 @Component({
