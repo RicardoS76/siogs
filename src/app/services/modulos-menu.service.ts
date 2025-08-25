@@ -59,7 +59,20 @@ export class ModulosMenuService {
       { id: 11, titulo: 'REPORTES', icono: 'menu' },
       { id: 12, titulo: 'REPORTES CONTABLES', icono: 'menu' },
       { id: 13, titulo: 'GENERADOR DE FOLIO', icono: 'menu' },
-      { id: 14, titulo: 'CATÁLOGOS PARA OBLIGACIONES', icono: 'menu' }
+      { id: 14, titulo: 'CATÁLOGOS PARA OBLIGACIONES', icono: 'menu' },
+      {
+        id: 15,
+        titulo: 'ADMINISTRACIÓN',
+        icono: 'skin', // o 'menu', como prefieras
+        categorias: [
+          {
+            nombre: 'APARIENCIA',
+            subopciones: [
+              { nombre: 'Administración de temas', ruta: '/administracion-temas' }
+            ]
+          }
+        ]
+      }
     ]);
   }
 }

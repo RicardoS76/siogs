@@ -1,3 +1,7 @@
+@use 'styles/tokens-custom' as *; // antes: @import 'styles/tokens-custom';
+
+html, body { background: var(--layout-bg); color: var(--text); }
+
 ::ng-deep .cdk-overlay-backdrop {
   background: rgba(255, 255, 255, 0.3) !important;
 }
@@ -5,5 +9,5 @@
 ::ng-deep .custom-menu-modal .ant-modal-content {
   border-radius: 12px !important;
   box-shadow: 0 6px 20px rgba(255, 255, 255, 0) !important;
-  padding: 0px !important;
+  padding: 0 !important;
 }

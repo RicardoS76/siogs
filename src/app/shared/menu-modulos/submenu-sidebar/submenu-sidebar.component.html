@@ -1,46 +1,61 @@
 <div *ngIf="modulo" class="sidebar-container">
-<div class="modulo-header" (click)="cerrarSubmenu()">
-  <i nz-icon nzType="appstore" class="modulo-icon"></i>
-  <span class="modulo-titulo">{{ modulo.titulo }}</span>
-</div>
+  <div class="modulo-header" (click)="cerrarSubmenu()">
+    <i nz-icon nzType="appstore" class="modulo-icon"></i>
+    <span class="modulo-titulo">{{ modulo.titulo }}</span>
+  </div>
 
   <div *ngFor="let categoria of modulo?.categorias" class="categoria">
     <div class="categoria-header" (click)="toggleCategoria(categoria)">
       <span class="categoria-nombre" [class.expandida]="categoriaExpandida === categoria">
-  {{ categoria.nombre }}
-</span>
+        {{ categoria.nombre }}
+      </span>
 
       <i nz-icon [nzType]="categoriaExpandida === categoria ? 'up' : 'down'"></i>
     </div>
 
-    <!-- Subopciones -->
-    <div class="subopciones" *ngIf="categoriaExpandida === categoria">
-      <div class="subopcion" *ngFor="let sub of categoria.subopciones">
-<div
-  class="sub-header"
-  [class.activa]="subcategoriaExpandida === sub.nombre"
-  (click)="toggleSubcategoria(sub.nombre)"
->
-  {{ sub.nombre }}
-  <i
-    nz-icon
-    [nzType]="subcategoriaExpandida === sub.nombre ? 'up' : 'down'"
-    *ngIf="sub.subopcionesInternas?.length"
-  ></i>
-</div>
+<!-- Subopciones -->
+<div class="subopciones" *ngIf="categoriaExpandida === categoria">
+  <div class="subopcion" *ngFor="let sub of categoria.subopciones">
+    <!-- Caso 1: subopción con ruta y SIN hijas -> navegar directo -->
+    <div
+      *ngIf="sub.ruta && !sub.subopcionesInternas?.length; else expandible"
+      class="sub-header"
+      (click)="navegar(modulo!, categoria, sub)"
+    >
+      {{ sub.nombre }}
+    </div>
 
-        <!-- Sub-subopciones -->
+    <!-- Caso 2: subopción expandible (con hijas o sin ruta) -->
+    <ng-template #expandible>
+      <div
+        class="sub-header"
+        [class.activa]="subcategoriaExpandida === sub.nombre"
+        (click)="toggleSubcategoria(sub.nombre)"
+      >
+        {{ sub.nombre }}
+        <i
+          nz-icon
+          [nzType]="subcategoriaExpandida === sub.nombre ? 'up' : 'down'"
+          *ngIf="sub.subopcionesInternas?.length"
+        ></i>
+      </div>
+
+      <!-- Sub-subopciones -->
+      <div
+        class="sub-subopciones"
+        *ngIf="subcategoriaExpandida === sub.nombre && sub.subopcionesInternas?.length"
+      >
         <div
-          class="sub-subopciones"
-          *ngIf="subcategoriaExpandida === sub.nombre && sub.subopcionesInternas?.length"
+          class="item"
+          *ngFor="let subint of sub.subopcionesInternas"
+          (click)="navegar(modulo!, categoria, sub, subint)"
         >
-<div class="item" *ngFor="let subint of sub.subopcionesInternas"
-     (click)="navegar(modulo!, categoria, sub, subint)">
-  {{ subint.nombre }}
-</div>
-
+          {{ subint.nombre }}
         </div>
       </div>
-    </div>
+    </ng-template>
+  </div>
+</div>
+
   </div>
 </div>
